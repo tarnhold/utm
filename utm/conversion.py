@@ -124,9 +124,7 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
              P5 * math.sin(8 * mu) +
              P6 * math.sin(10 * mu))
 
-    p_sin = math.sin(p_rad)
-    p_sin2 = p_sin * p_sin
-
+    p_sin2 = math.sin(p_rad) ** 2
     p_cos = math.cos(p_rad)
 
     p_tan = math.tan(p_rad)
@@ -190,8 +188,6 @@ def from_latlon(latitude, longitude, force_zone_number=None):
         raise OutOfRangeError('longitude out of range (must be between 180 deg W and 180 deg E)')
 
     lat_rad = math.radians(latitude)
-    lat_sin = math.sin(lat_rad)
-    lat_cos = math.cos(lat_rad)
 
     lat_tan = math.tan(lat_rad)
     lat_tan2 = lat_tan ** 2
@@ -209,13 +205,13 @@ def from_latlon(latitude, longitude, force_zone_number=None):
     central_lon = zone_number_to_central_longitude(zone_number)
     central_lon_rad = math.radians(central_lon)
 
-    n = R / math.sqrt(1 - E * lat_sin**2)
-    c = E_P2 * lat_cos**2
+    n = R / math.sqrt(1 - E * sin(lat_rad)**2)
+    c = E_P2 * cos(lat_rad)**2
     c2 = c ** 2
     c3 = c ** 3
     c4 = c ** 4
 
-    a = lat_cos * (lon_rad - central_lon_rad)
+    a = cos(lat_rad) * (lon_rad - central_lon_rad)
 
     # meridian distance from latitude
     m = R * (M1 * lat_rad -
