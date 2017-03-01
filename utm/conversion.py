@@ -134,11 +134,8 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
     p_tan4 = p_tan ** 4
     p_tan6 = p_tan ** 6
 
-    ep_sin = 1 - E * p_sin2
-    ep_sin_sqrt = math.sqrt(1 - E * p_sin2)
-
-    n = R / ep_sin_sqrt
-    r = (1 - E) / ep_sin
+    n = R / math.sqrt(1 - E * p_sin2)
+    r = (1 - E) / (1 - E * p_sin2)
 
     c = _E * p_cos**2
     c2 = c ** 2
