@@ -37,21 +37,21 @@ _E5 = _E4 * _E
 #   Equator to the Pole? - Overview of Meridian Distance Approximations,
 #   TransNav the International Journal on Marine Navigation and Safety
 #   of Sea Transportation, Volume 7, Number 2, June 2013.
-M1 =                 (1 - E / 4 - 3 * E2 / 64 -  5 * E3 / 256 - 175 * E4 / 16384 - 441 * E5 / 65536)
-M2 =   3. / 8      * (    E +         E2 /  4 + 15 * E3 / 128 +  35 * E4 /   512 + 735 * E5 / 16384)
-M3 =  15. / 256    * (                E2      +  3 * E3 /   4 +  35 * E4 /    64 + 105 * E5 /   256)
-M4 =  35. / 3072   * (                               E3       +   5 * E4 /     4 + 315 * E5 /   256)
-M5 = 315. / 131072 * (                                                E4         +   7 * E5 /     4)
-M6 = 693. / 1310720 *                                                                    E5
+M1 =                  (1 - E / 4 - 3 * E2 / 64 -  5 * E3 / 256 - 175 * E4 / 16384 - 441 * E5 / 65536)
+M2 =   3. /       8 * (    E +         E2 /  4 + 15 * E3 / 128 +  35 * E4 /   512 + 735 * E5 / 16384)
+M3 =  15. /     256 * (                E2      +  3 * E3 /   4 +  35 * E4 /    64 + 105 * E5 /   256)
+M4 =  35. /    3072 * (                               E3       +   5 * E4 /     4 + 315 * E5 /   256)
+M5 = 315. /  131072 * (                                                E4         +   7 * E5 /     4)
+M6 = 693. / 1310720 *                                                                     E5
 
 # Latitude from distance
 #
 # Deakin, R. E. (2012): Great Elliptic Arc Distance, School of Mathematical &
 #   Geospatial Sciences, RMIT University, Melbourne, January 2012.
-P2 = (3. / 2 * _E - 27. / 32 * _E3 + 269. / 512 * _E5)
-P3 = (21. / 16 * _E2 - 55. / 32 * _E4)
-P4 = (151. / 96 * _E3 - 417. / 128 * _E5)
-P5 = (1097. / 512 * _E4)
+P2 = (   3. /    2 * _E  -  27. /  32 * _E3 + 269. / 512 * _E5)
+P3 = (  21. /   16 * _E2 -  55. /  32 * _E4)
+P4 = ( 151. /   96 * _E3 - 417. / 128 * _E5)
+P5 = (1097. /  512 * _E4)
 P6 = (8011. / 2560 * _E5) # 13th place difference
 
 R = 6378137
