@@ -14,7 +14,7 @@ F = 1.0 / 298.257222101
 #F = 1.0 / 298.257223563
 
 # first numerical eccentricity squared (e^2)
-E = 2.0 * F - math.pow(F, 2.0) # [-]
+E = (2.0 - F) * F
 E2 = E ** 2
 E3 = E ** 3
 E4 = E ** 4
@@ -22,8 +22,8 @@ E5 = E ** 5
 # second numerical eccentricity squared (e^'2)
 E_P2 = E / (1.0 - E)
 
-SQRT_E = math.sqrt(1 - E)
-_E = (1 - SQRT_E) / (1 + SQRT_E)
+# third flattening n
+_E = F / (2.0 - F)
 _E2 = _E ** 2
 _E3 = _E ** 3
 _E4 = _E ** 4
