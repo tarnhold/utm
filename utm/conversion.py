@@ -15,19 +15,19 @@ F = 1.0 / 298.257222101
 
 # first numerical eccentricity squared (e^2)
 E = 2.0 * F - math.pow(F, 2.0) # [-]
-E2 = E * E
-E3 = E2 * E
-E4 = E3 * E
-E5 = E4 * E
+E2 = E ** 2
+E3 = E ** 3
+E4 = E ** 4
+E5 = E ** 5
 # second numerical eccentricity squared (e^'2)
 E_P2 = E / (1.0 - E)
 
 SQRT_E = math.sqrt(1 - E)
 _E = (1 - SQRT_E) / (1 + SQRT_E)
-_E2 = _E * _E
-_E3 = _E2 * _E
-_E4 = _E3 * _E
-_E5 = _E4 * _E
+_E2 = _E ** 2
+_E3 = _E ** 3
+_E4 = _E ** 4
+_E5 = _E ** 5
 
 # Meridian distance from latitude
 #
@@ -129,10 +129,10 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
 
     p_cos = math.cos(p_rad)
 
-    p_tan = p_sin / p_cos
-    p_tan2 = p_tan * p_tan
-    p_tan4 = p_tan2 * p_tan2
-    p_tan6 = p_tan4 * p_tan2
+    p_tan = math.tan(p_rad)
+    p_tan2 = p_tan ** 2
+    p_tan4 = p_tan ** 4
+    p_tan6 = p_tan ** 6
 
     ep_sin = 1 - E * p_sin2
     ep_sin_sqrt = math.sqrt(1 - E * p_sin2)
@@ -141,18 +141,11 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
     r = (1 - E) / ep_sin
 
     c = _E * p_cos**2
-    c2 = c * c
-    c3 = c2 * c
-    c4 = c3 * c
+    c2 = c ** 2
+    c3 = c ** 3
+    c4 = c ** 4
 
     d = x / (n * K0)
-    d2 = d * d
-    d3 = d2 * d
-    d4 = d3 * d
-    d5 = d4 * d
-    d6 = d5 * d
-    d7 = d6 * d
-    d8 = d7 * d
 
     # Kelly, Kevin M. (1986): Coordinate Transformations - Universal
     #   Transverse Mercator/Geographic. Ontario Ministry of Natural
@@ -162,15 +155,15 @@ def to_latlon(easting, northing, zone_number, zone_letter=None, northern=None, s
     # Hofmann-Wellenhof, B.; Kienast, G.; Lichtenegger, H. (1994): GPS in der
     #   Praxis, Springer-Verlag Wien New York, p.97ff, Wien.
     latitude = (p_rad - (p_tan / r) *
-                (d2 / 2 -
-                 d4 / 24 * (5 + 3 * p_tan2 + c - 4 * c2 - 9 * p_tan2 * c) +
-                 d6 / 720 * (61 + 90 * p_tan2 + 45 * p_tan4 + 46 * c - 3 * c2 + 100 * c3 + 88 * c4 - 252 * p_tan2 * c - 66 * p_tan2 * c2 + 84 * p_tan4 * c3 - 192 * p_tan2 * c4 - 90 * p_tan4 * c + 225 * p_tan4 * c2) -
-                 d8 / 40320 * (1385 + 3633 * p_tan2 + 4095 * p_tan4 + 1575 * p_tan6)))
+                (d ** 2 / 2 -
+                 d ** 4 / 24 * (5 + 3 * p_tan2 + c - 4 * c2 - 9 * p_tan2 * c) +
+                 d ** 6 / 720 * (61 + 90 * p_tan2 + 45 * p_tan4 + 46 * c - 3 * c2 + 100 * c3 + 88 * c4 - 252 * p_tan2 * c - 66 * p_tan2 * c2 + 84 * p_tan4 * c3 - 192 * p_tan2 * c4 - 90 * p_tan4 * c + 225 * p_tan4 * c2) -
+                 d ** 8 / 40320 * (1385 + 3633 * p_tan2 + 4095 * p_tan4 + 1575 * p_tan6)))
 
     longitude = (d -
-                 d3 / 6 * (1 + 2 * p_tan2 + c) +
-                 d5 / 120 * (5 + 28 * p_tan2 + 24 * p_tan4 + 6 * c - 3 * c2 - 4 * c3 + 8 * p_tan2 * c + 4 * p_tan2 * c2 + 24 * p_tan2 * c3) -
-                 d7 / 5040 * (61 + 662 * p_tan2 + 1320 * p_tan4 + 720 * p_tan6)) / p_cos
+                 d ** 3 / 6 * (1 + 2 * p_tan2 + c) +
+                 d ** 5 / 120 * (5 + 28 * p_tan2 + 24 * p_tan4 + 6 * c - 3 * c2 - 4 * c3 + 8 * p_tan2 * c + 4 * p_tan2 * c2 + 24 * p_tan2 * c3) -
+                 d ** 7 / 5040 * (61 + 662 * p_tan2 + 1320 * p_tan4 + 720 * p_tan6)) / p_cos
 
     return (math.degrees(latitude),
             math.degrees(longitude) + zone_number_to_central_longitude(zone_number))
@@ -203,10 +196,10 @@ def from_latlon(latitude, longitude, force_zone_number=None):
     lat_sin = math.sin(lat_rad)
     lat_cos = math.cos(lat_rad)
 
-    lat_tan = lat_sin / lat_cos
-    lat_tan2 = lat_tan * lat_tan
-    lat_tan4 = lat_tan2 * lat_tan2
-    lat_tan6 = lat_tan4 * lat_tan2
+    lat_tan = math.tan(lat_rad)
+    lat_tan2 = lat_tan ** 2
+    lat_tan4 = lat_tan ** 4
+    lat_tan6 = lat_tan ** 6
 
     if force_zone_number is None:
         zone_number = latlon_to_zone_number(latitude, longitude)
@@ -221,15 +214,11 @@ def from_latlon(latitude, longitude, force_zone_number=None):
 
     n = R / math.sqrt(1 - E * lat_sin**2)
     c = E_P2 * lat_cos**2
+    c2 = c ** 2
+    c3 = c ** 3
+    c4 = c ** 4
 
     a = lat_cos * (lon_rad - central_lon_rad)
-    a2 = a * a
-    a3 = a2 * a
-    a4 = a3 * a
-    a5 = a4 * a
-    a6 = a5 * a
-    a7 = a6 * a
-    a8 = a7 * a
 
     # meridian distance from latitude
     m = R * (M1 * lat_rad -
@@ -239,10 +228,6 @@ def from_latlon(latitude, longitude, force_zone_number=None):
              M5 * math.sin(8 * lat_rad) -
              M6 * math.sin(10 * lat_rad))
 
-    c2 = c * c
-    c3 = c2 * c
-    c4 = c3 * c
-
     # Kelly, Kevin M. (1986): Coordinate Transformations - Universal
     #    Transverse Mercator/Geographic. Ontario Ministry of Natural
     #    Resources. March 1986.
@@ -251,15 +236,15 @@ def from_latlon(latitude, longitude, force_zone_number=None):
     # Hofmann-Wellenhof, B.; Kienast, G.; Lichtenegger, H. (1994): GPS in der
     #    Praxis, Springer-Verlag Wien New York, p.97ff, Wien.
     easting = K0 * n * (a +
-                        a3 / 6 * (1 - lat_tan2 + c) +
-                        a5 / 120 * (5 - 18 * lat_tan2 + lat_tan4 + 14 * c + 13 * c2 + 4 * c3 - 58 * c * lat_tan2 - 64 * c2 * lat_tan2 - 24 * lat_tan2 * c3 ) +
-                        a7 / 5040 * (61 - 479 * lat_tan2 + 179 * lat_tan4 - lat_tan6)
+                        a ** 3 / 6 * (1 - lat_tan2 + c) +
+                        a ** 5 / 120 * (5 - 18 * lat_tan2 + lat_tan4 + 14 * c + 13 * c2 + 4 * c3 - 58 * c * lat_tan2 - 64 * c2 * lat_tan2 - 24 * lat_tan2 * c3 ) +
+                        a ** 7 / 5040 * (61 - 479 * lat_tan2 + 179 * lat_tan4 - lat_tan6)
                         ) + 500000
 
-    northing = K0 * (m + n * lat_tan * (a2 / 2 +
-                                        a4 / 24 * (5 - lat_tan2 + 9 * c + 4 * c2) +
-                                        a6 / 720 * (61 - 58 * lat_tan2 + lat_tan4 + 270 * c  + 445 * c2 + 324 * c3 + 88 * c4 - 330 * c * lat_tan2 - 680 * lat_tan2 * c2 - 600 * lat_tan2 * c3 - 192 * lat_tan2 * c4) +
-                                        a8 / 40320 * (1385 - 3111 * lat_tan2 + 543 * lat_tan4 - lat_tan6)
+    northing = K0 * (m + n * lat_tan * (a ** 2 / 2 +
+                                        a ** 4 / 24 * (5 - lat_tan2 + 9 * c + 4 * c2) +
+                                        a ** 6 / 720 * (61 - 58 * lat_tan2 + lat_tan4 + 270 * c  + 445 * c2 + 324 * c3 + 88 * c4 - 330 * c * lat_tan2 - 680 * lat_tan2 * c2 - 600 * lat_tan2 * c3 - 192 * lat_tan2 * c4) +
+                                        a ** 8 / 40320 * (1385 - 3111 * lat_tan2 + 543 * lat_tan4 - lat_tan6)
                                         ))
 
     if latitude < 0:
