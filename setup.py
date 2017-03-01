@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
     name='utm',
@@ -20,4 +20,5 @@ setup(
     ],
     packages=['utm'],
     scripts=['scripts/utm-converter'],
+    test_suite='test',
 )
