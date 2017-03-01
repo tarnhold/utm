@@ -22,3 +22,5 @@ setup(
     scripts=['scripts/utm-converter'],
     test_suite='test',
 )
+
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
