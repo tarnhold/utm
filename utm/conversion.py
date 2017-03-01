@@ -5,11 +5,21 @@ __all__ = ['to_latlon', 'from_latlon']
 
 K0 = 0.9996
 
-E = 0.00669438
+# GRS80
+R = 6378137.0
+F = 1.0 / 298.257222101
+
+# WGS84
+#R = 6378137.0
+#F = 1.0 / 298.257223563
+
+# first numerical eccentricity squared (e^2)
+E = 2.0 * F - math.pow(F, 2.0) # [-]
 E2 = E * E
 E3 = E2 * E
 E4 = E3 * E
 E5 = E4 * E
+# second numerical eccentricity squared (e^'2)
 E_P2 = E / (1.0 - E)
 
 SQRT_E = math.sqrt(1 - E)
