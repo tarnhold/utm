@@ -3,65 +3,64 @@ import unittest
 
 
 class UTMTestCase(unittest.TestCase):
-    def assert_utm_equal(self, a, b):
-        self.assertAlmostEqual(a[0], b[0], 0)
-        self.assertAlmostEqual(a[1], b[1], 0)
+    def assert_utm_equal(self, a, b, precision=6):
+        self.assertAlmostEqual(a[0], b[0], precision)
+        self.assertAlmostEqual(a[1], b[1], precision)
         self.assertEqual(a[2], b[2])
         self.assertEqual(a[3].upper(), b[3].upper())
 
-    def assert_latlon_equal(self, a, b):
-        self.assertAlmostEqual(a[0], b[0], 4)
-        self.assertAlmostEqual(a[1], b[1], 4)
-
+    def assert_latlon_equal(self, a, b, precision=5):
+        self.assertAlmostEqual(a[0], b[0], precision)
+        self.assertAlmostEqual(a[1], b[1], precision)
 
 class KnownValues(UTMTestCase):
     known_values = [
         # Aachen, Germany
         (
-            (50.77535, 6.08389),
-            (294409, 5628898, 32, 'U'),
+            (50.77534556, 6.08388667),
+            (294408.6629413165, 5628897.512984848, 32, 'U'),
             {'northern': True},
         ),
         # New York, USA
         (
-            (40.71435, -74.00597),
-            (583960, 4507523, 18, 'T'),
+            (40.71435000, -74.00597000),
+            (583959.9590453324, 4507523.086854666, 18, 'T'),
             {'northern': True},
         ),
         # Wellington, New Zealand
         (
-            (-41.28646, 174.77624),
-            (313784, 5427057, 60, 'G'),
+            (-41.28646000, 174.77623611),
+            (313783.9800490139, 5427057.31375506, 60, 'G'),
             {'northern': False},
         ),
         # Capetown, South Africa
         (
-            (-33.92487, 18.42406),
-            (261878, 6243186, 34, 'H'),
+            (-33.92486889, 18.42405500),
+            (261877.35097616664, 6243185.70084469, 34, 'H'),
             {'northern': False},
         ),
         # Mendoza, Argentina
         (
-            (-32.89018, -68.84405),
-            (514586, 6360877, 19, 'h'),
+            (-32.89018000, -68.84405000),
+            (514586.2278363817, 6360876.825073615, 19, 'h'),
             {'northern': False},
         ),
         # Fairbanks, Alaska, USA
         (
-            (64.83778, -147.71639),
-            (466013, 7190568, 6, 'W'),
+            (64.83777806, -147.71638889),
+            (466013.3224492781, 7190567.781669141, 6, 'W'),
             {'northern': True},
         ),
         # Ben Nevis, Scotland, UK
         (
-            (56.79680, -5.00601),
-            (377486, 6296562, 30, 'V'),
+            (56.79680000, -5.00601000),
+            (377485.7656701202, 6296561.854117123, 30, 'V'),
             {'northern': True},
         ),
         # Latitude 84
         (
             (84, -5.00601),
-            (476594, 9328501, 30, 'X'),
+            (476594.34011230164, 9328501.361833721, 30, 'X'),
             {'northern': True},
         ),
     ]
