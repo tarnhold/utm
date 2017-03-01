@@ -205,13 +205,13 @@ def from_latlon(latitude, longitude, force_zone_number=None):
     lat_tan4 = lat_tan ** 4
     lat_tan6 = lat_tan ** 6
 
-    n = R / math.sqrt(1 - E * sin(lat_rad)**2)
-    c = E_P2 * cos(lat_rad)**2
+    n = R / math.sqrt(1 - E * math.sin(lat_rad)**2)
+    c = E_P2 * math.cos(lat_rad)**2
     c2 = c ** 2
     c3 = c ** 3
     c4 = c ** 4
 
-    a = cos(lat_rad) * (lon_rad - central_lon_rad)
+    a = math.cos(lat_rad) * (lon_rad - central_lon_rad)
 
     # meridian distance from latitude
     m = R * (M1 * lat_rad -
