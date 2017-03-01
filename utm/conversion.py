@@ -187,13 +187,6 @@ def from_latlon(latitude, longitude, force_zone_number=None):
     if not -180.0 <= longitude <= 180.0:
         raise OutOfRangeError('longitude out of range (must be between 180 deg W and 180 deg E)')
 
-    lat_rad = math.radians(latitude)
-
-    lat_tan = math.tan(lat_rad)
-    lat_tan2 = lat_tan ** 2
-    lat_tan4 = lat_tan ** 4
-    lat_tan6 = lat_tan ** 6
-
     if force_zone_number is None:
         zone_number = latlon_to_zone_number(latitude, longitude)
     else:
@@ -204,6 +197,13 @@ def from_latlon(latitude, longitude, force_zone_number=None):
     lon_rad = math.radians(longitude)
     central_lon = zone_number_to_central_longitude(zone_number)
     central_lon_rad = math.radians(central_lon)
+
+    lat_rad = math.radians(latitude)
+
+    lat_tan = math.tan(lat_rad)
+    lat_tan2 = lat_tan ** 2
+    lat_tan4 = lat_tan ** 4
+    lat_tan6 = lat_tan ** 6
 
     n = R / math.sqrt(1 - E * sin(lat_rad)**2)
     c = E_P2 * cos(lat_rad)**2
