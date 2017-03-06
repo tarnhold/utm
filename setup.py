@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+from Cython.Build import cythonize
 
 setup(
     name='utm',
@@ -19,6 +20,7 @@ setup(
         'Topic :: Scientific/Engineering :: GIS',
     ],
     packages=['utm'],
+    ext_modules=cythonize('utm/conversion.pyx'),
     scripts=['scripts/utm-converter'],
     test_suite='test',
 )
