@@ -62,12 +62,11 @@ class KnownValues(UTMTestCase):
             {'northern': True},
         ),
         # Latitude 84
-#FIXME: disabled, because roundtrip results is 84.00000016... which is outside border
-#        (
-#            (84, -5.00601),
-#            (476594.34011230164, 9328501.361833721, 30, 'X'),
-#            {'northern': True},
-#        ),
+        (
+            (84, -5.00601),
+            (476594.34011230164, 9328501.361833721, 30, 'X'),
+            {'northern': True},
+        ),
     ]
 
     def test_from_latlon(self):
@@ -100,7 +99,9 @@ class KnownValues(UTMTestCase):
         for latlon, utm, utm_kw in self.known_values:
             latlonr = UTM.to_latlon(*utm)
 
-            result = UTM.from_latlon(*latlonr)
+            # disable strict lat/lon range check, because roundtrip
+            # of "Latitude 84" is 84.00000016... which is outside range
+            result = UTM.from_latlon(*latlonr, strict=False)
             # we should get the same values as the initial input
             self.assert_latlon_equal(utm, result, 0)
 

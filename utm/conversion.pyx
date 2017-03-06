@@ -81,6 +81,8 @@ cpdef to_latlon(double easting, double northing, int zone_number, zone_letter=No
         northern: bool
             You can set True or False to set this parameter. Default is None
 
+        strict: bool
+            Check for valid easting and northing value. Default is True.
 
        .. _[1]: http://www.jaworski.ca/utmzones.htm
 
@@ -164,7 +166,7 @@ cpdef to_latlon(double easting, double northing, int zone_number, zone_letter=No
             rad2deg * longitude + zone_number_to_central_longitude(zone_number))
 
 
-cpdef from_latlon(double latitude, double longitude, force_zone_number=None):
+cpdef from_latlon(double latitude, double longitude, force_zone_number=None, strict=True):
     """This function convert Latitude and Longitude to UTM coordinate
 
         Parameters
@@ -180,12 +182,16 @@ cpdef from_latlon(double latitude, double longitude, force_zone_number=None):
             Numbers Map. You may force conversion including one UTM Zone Number.
             More information see utmzones [1]_
 
+        strict: bool
+            Check for valid latitude and longitude value. Default is True.
+
        .. _[1]: http://www.jaworski.ca/utmzones.htm
     """
-    if not -80.0 <= latitude <= 84.0:
-        raise OutOfRangeError('latitude out of range (must be between 80 deg S and 84 deg N)')
-    if not -180.0 <= longitude <= 180.0:
-        raise OutOfRangeError('longitude out of range (must be between 180 deg W and 180 deg E)')
+    if strict:
+        if not -80.0 <= latitude <= 84.0:
+            raise OutOfRangeError('latitude out of range (must be between 80 deg S and 84 deg N)')
+        if not -180.0 <= longitude <= 180.0:
+            raise OutOfRangeError('longitude out of range (must be between 180 deg W and 180 deg E)')
 
     if force_zone_number is None:
         zone_number = latlon_to_zone_number(latitude, longitude)
