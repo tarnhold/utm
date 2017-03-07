@@ -204,13 +204,42 @@ class BadInput(UTMTestCase):
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 32, 'Z')
 
 
-class Zone32V(unittest.TestCase):
+class SpecialZones(unittest.TestCase):
 
     def assert_zone_equal(self, result, expected_number, expected_letter):
         self.assertEqual(result[2], expected_number)
         self.assertEqual(result[3].upper(), expected_letter.upper())
 
+    # test 31X, 33X, 35X, 37X
+    def test_zones_X(self):
+        # test lower left and upper left
+        self.assert_zone_equal(UTM.from_latlon(72, 0), 31, 'X')
+        self.assert_zone_equal(UTM.from_latlon(72, 9), 33, 'X')
+        self.assert_zone_equal(UTM.from_latlon(72, 21), 35, 'X')
+        self.assert_zone_equal(UTM.from_latlon(72, 33), 37, 'X')
+        self.assert_zone_equal(UTM.from_latlon(72, 42), 38, 'X')
+
+        self.assert_zone_equal(UTM.from_latlon(84, 0), 31, 'X')
+        self.assert_zone_equal(UTM.from_latlon(84, 9), 33, 'X')
+        self.assert_zone_equal(UTM.from_latlon(84, 21), 35, 'X')
+        self.assert_zone_equal(UTM.from_latlon(84, 33), 37, 'X')
+        self.assert_zone_equal(UTM.from_latlon(84, 42), 38, 'X')
+
+        # test inside
+        self.assert_zone_equal(UTM.from_latlon(72, 6), 31, 'X')
+        self.assert_zone_equal(UTM.from_latlon(72, 12), 33, 'X')
+        self.assert_zone_equal(UTM.from_latlon(72, 18), 33, 'X')
+        self.assert_zone_equal(UTM.from_latlon(72, 24), 35, 'X')
+        self.assert_zone_equal(UTM.from_latlon(72, 30), 35, 'X')
+        self.assert_zone_equal(UTM.from_latlon(72, 36), 37, 'X')
+
+    # test 31V and 32V
     def test_inside(self):
+        # test 31V
+        self.assert_zone_equal(UTM.from_latlon(56, 0), 31, 'V')
+        self.assert_zone_equal(UTM.from_latlon(56, 2.999999), 31, 'V')
+
+        # test 32V
         self.assert_zone_equal(UTM.from_latlon(56, 3), 32, 'V')
         self.assert_zone_equal(UTM.from_latlon(56, 6), 32, 'V')
         self.assert_zone_equal(UTM.from_latlon(56, 9), 32, 'V')
