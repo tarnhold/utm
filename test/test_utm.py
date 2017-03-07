@@ -13,7 +13,7 @@ class UTMTestCase(unittest.TestCase):
         self.assertAlmostEqual(a[0], b[0], precision)
         self.assertAlmostEqual(a[1], b[1], precision)
 
-class KnownValues(UTMTestCase):
+class KnownValuesGRS80(UTMTestCase):
     # Known UTM values were projected from latitude and longitude values
     # using GeographicLib (onto GRS80 ellipsoid!). As this library has a
     # much higher series expansion and a different implementation we can
