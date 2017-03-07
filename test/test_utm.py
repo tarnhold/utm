@@ -111,15 +111,21 @@ class BadInput(UTMTestCase):
         '''from_latlon should fail with out-of-bounds input'''
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, -100, 0)
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, -80.1, 0)
+
+        # test valid range
         for i in range(-8000, 8400):
             UTM.from_latlon(i / 100.0, 0)
+
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 84.1, 0)
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 100, 0)
 
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 0, -300)
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 0, -180.1)
+
+        # test valid range
         for i in range(-18000, 18000):
             UTM.from_latlon(0, i / 100.0)
+
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 0, 180.1)
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 0, 300)
 
@@ -132,66 +138,59 @@ class BadInput(UTMTestCase):
         '''to_latlon should fail with out-of-bounds input'''
 
         # test easting range
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 0, 5000000, 32, 'U')
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 99999, 5000000, 32, 'U')
 
+        # valid range
         for i in range(100000, 999999, 1000):
             UTM.to_latlon(i, 5000000, 32, 'U')
 
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 1000000, 5000000, 32, 'U')
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 100000000000, 5000000, 32, 'U')
 
         # test northing range
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, -100000, 32, 'U')
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, -1, 32, 'U')
+
+        # valid range
         for i in range(10, 10000000, 1000):
             UTM.to_latlon(500000, i, 32, 'U')
 
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 10000001, 32, 'U')
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 50000000, 32, 'U')
 
         # test zone numbers
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 0, 'U')
 
+        # valid range
         for i in range(1, 60):
             UTM.to_latlon(500000, 5000000, i, 'U')
 
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 61, 'U')
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 1000, 'U')
 
         # test zone letters
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 32, 'A')
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 32, 'B')
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 32, 'I')
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 32, 'O')
 
+        # valid range
         for i in range(ord('C'), ord('X')):
             i = chr(i)
             if i != 'I' and i != 'O':
@@ -199,7 +198,6 @@ class BadInput(UTMTestCase):
 
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 32, 'Y')
-
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 32, 'Z')
 
