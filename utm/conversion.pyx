@@ -107,6 +107,9 @@ cpdef to_latlon(double easting, double northing, int zone_number, zone_letter=No
         if not 'C' <= zone_letter <= 'X' or zone_letter in ['I', 'O']:
             raise OutOfRangeError('zone letter out of range (must be between C and X)')
 
+        if zone_letter == 'X' and zone_number in [32, 34, 36]:
+            raise OutOfRangeError('zone number not valid (there is no zone ' + str(zone_number) + 'in X')
+
         northern = (zone_letter >= 'N')
 
     cdef double x = easting - 500000

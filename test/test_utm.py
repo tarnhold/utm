@@ -190,6 +190,14 @@ class BadInput(UTMTestCase):
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 32, 'O')
 
+        # there are no zone numbers 32, 34 and 36 in X
+        self.assertRaises(
+            UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 32, 'X')
+        self.assertRaises(
+            UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 34, 'X')
+        self.assertRaises(
+            UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 36, 'X')
+
         # valid range
         for i in range(ord('C'), ord('X')):
             i = chr(i)
