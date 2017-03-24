@@ -113,7 +113,7 @@ class BadInput(UTMTestCase):
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, -80.1, 0)
 
         # test valid range
-        for i in range(-8000, 8400):
+        for i in range(-8000, 8400 + 1):
             UTM.from_latlon(i / 100.0, 0)
 
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 84.1, 0)
@@ -126,6 +126,7 @@ class BadInput(UTMTestCase):
         for i in range(-18000, 18000):
             UTM.from_latlon(0, i / 100.0)
 
+        self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 0, 180)
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 0, 180.1)
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 0, 300)
 
@@ -182,7 +183,7 @@ class BadInput(UTMTestCase):
             UTM.OutOfRangeError, UTM.to_latlon, 99999, 5000000, 32, 'U')
 
         # valid range
-        for i in range(100000, 999999, 1000):
+        for i in range(100000, 999999 + 1, 1000):
             UTM.to_latlon(i, 5000000, 32, 'U')
 
         self.assertRaises(
@@ -197,7 +198,7 @@ class BadInput(UTMTestCase):
             UTM.OutOfRangeError, UTM.to_latlon, 500000, -1, 32, 'U')
 
         # valid range
-        for i in range(10, 10000000, 1000):
+        for i in range(10, 10000000 + 1, 1000):
             UTM.to_latlon(500000, i, 32, 'U')
 
         self.assertRaises(
@@ -212,7 +213,7 @@ class BadInput(UTMTestCase):
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 0, 'U')
 
         # valid range
-        for i in range(1, 60):
+        for i in range(1, 60 + 1):
             UTM.to_latlon(500000, 5000000, i, 'U')
 
         self.assertRaises(
@@ -239,10 +240,10 @@ class BadInput(UTMTestCase):
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 36, 'X')
 
         # valid range
-        for i in range(ord('C'), ord('X')):
+        for i in range(ord('C'), ord('X') + 1):
             i = chr(i)
             if i != 'I' and i != 'O':
-                UTM.to_latlon(500000, 5000000, 32, i)
+                UTM.to_latlon(500000, 5000000, 31, i)
 
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 32, 'Y')
