@@ -104,6 +104,9 @@ cpdef to_latlon(double easting, double northing, int zone_number, zone_letter=No
     if zone_letter:
         zone_letter = zone_letter.upper()
 
+        if len(zone_letter) > 1:
+            raise OutOfRangeError('zone letter out of range (must be one character)')
+
         if not 'C' <= zone_letter <= 'X' or zone_letter in ['I', 'O']:
             raise OutOfRangeError('zone letter out of range (must be between C and X)')
 

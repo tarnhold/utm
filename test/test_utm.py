@@ -137,6 +137,18 @@ class BadInput(UTMTestCase):
     def test_to_latlon_range_checks(self):
         '''to_latlon should fail with out-of-bounds input'''
 
+        # validate input
+        self.assertRaises(
+            ValueError, UTM.to_latlon, 500000, -100000, 32, 'U', northern=True)
+        self.assertRaises(
+            ValueError, UTM.to_latlon, 500000, -100000, 32, '')
+        self.assert_latlon_equal((0.904730614584, 9.0),
+            UTM.to_latlon(500000, 100000, 32, '', northern=True))
+
+        self.assertRaises(
+            UTM.OutOfRangeError, UTM.to_latlon, 500000, -100000, 32, 'UU')
+
+
         # test easting range
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 0, 5000000, 32, 'U')
@@ -168,6 +180,8 @@ class BadInput(UTMTestCase):
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 50000000, 32, 'U')
 
         # test zone numbers
+        self.assertRaises(
+            UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, -1, 'U')
         self.assertRaises(
             UTM.OutOfRangeError, UTM.to_latlon, 500000, 5000000, 0, 'U')
 
