@@ -197,13 +197,18 @@ cpdef from_latlon(double latitude, double longitude, force_zone_number=None, str
     if strict:
         if not -80.0 <= latitude <= 84.0:
             raise OutOfRangeError('latitude out of range (must be between 80 deg S and 84 deg N)')
-        if not -180.0 <= longitude < 180.0:
-            raise OutOfRangeError('longitude out of range (must be between 180 deg W and 180 deg E)')
+    # in any case we have to be strict with longitude, because we calculate
+    # zone_number from it
+    if not -180.0 <= longitude < 180.0:
+        raise OutOfRangeError('longitude out of range (must be between 180 deg W and 180 deg E)')
 
     if force_zone_number is None:
         zone_number = latlon_to_zone_number(latitude, longitude)
     else:
         zone_number = force_zone_number
+
+    if not 1 <= zone_number <= 60:
+        raise OutOfRangeError('zone number out of range (must be between 1 and 60)')
 
     zone_letter = latitude_to_zone_letter(latitude)
 

@@ -134,6 +134,32 @@ class BadInput(UTMTestCase):
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, -100, 300)
         self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 100, 300)
 
+        # test range check for parameter force_zone_number
+        UTM.from_latlon(0, 45, force_zone_number=1)
+        UTM.from_latlon(0, 45, force_zone_number=60)
+
+        self.assertRaises(UTM.OutOfRangeError,
+            UTM.from_latlon, 0, 45, force_zone_number=0)
+        self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 0, 45,
+            force_zone_number=-1)
+        self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 0, 45,
+            force_zone_number=61)
+
+        # test range check for parameter strict
+        # test out of range longitudes
+        self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 0, -180.1, strict=False)
+        UTM.from_latlon(0, -180, strict=False)
+        UTM.from_latlon(0, 0, strict=False)
+        UTM.from_latlon(0, 45, strict=False)
+        UTM.from_latlon(0, 179.999, strict=False)
+        self.assertRaises(UTM.OutOfRangeError, UTM.from_latlon, 0, 180, strict=False)
+
+        # test out of range latitudes
+        UTM.from_latlon(85.0, 0, strict=False)
+        UTM.from_latlon(84.0, 0, strict=False)
+        UTM.from_latlon(-80.0, 0, strict=False)
+        UTM.from_latlon(-81.0, 0, strict=False)
+
     def test_to_latlon_range_checks(self):
         '''to_latlon should fail with out-of-bounds input'''
 
