@@ -166,14 +166,14 @@ class BadInput(UTMTestCase):
 
         # validate input
         self.assertRaises(
-            ValueError, UTM.to_latlon, 500000, -100000, 32, 'U', northern=True)
+            ValueError, UTM.to_latlon, 500000, 100000, 32, 'U', northern=True)
         self.assertRaises(
-            ValueError, UTM.to_latlon, 500000, -100000, 32, '')
+            ValueError, UTM.to_latlon, 500000, 100000, 32, '')
         self.assert_latlon_equal((0.904730614584, 9.0),
             UTM.to_latlon(500000, 100000, 32, '', northern=True))
 
         self.assertRaises(
-            UTM.OutOfRangeError, UTM.to_latlon, 500000, -100000, 32, 'UU')
+            UTM.OutOfRangeError, UTM.to_latlon, 500000, 100000, 32, 'UU')
 
 
         # test easting range
