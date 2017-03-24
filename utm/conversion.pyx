@@ -98,6 +98,7 @@ cpdef to_latlon(double easting, double northing, int zone_number, zone_letter=No
             raise OutOfRangeError('easting out of range (must be between 100.000 m and 999.999 m)')
         if not 0 <= northing <= 10000000:
             raise OutOfRangeError('northing out of range (must be between 0 m and 10.000.000 m)')
+
     if not 1 <= zone_number <= 60:
         raise OutOfRangeError('zone number out of range (must be between 1 and 60)')
 
@@ -178,10 +179,10 @@ cpdef from_latlon(double latitude, double longitude, force_zone_number=None, str
         Parameters
         ----------
         latitude: float
-            Latitude between 80 deg S and 84 deg N, e.g. (-80.0 to 84.0)
+            Latitude between 80 deg S and 84 deg N, e.g. [-80.0 to 84.0]
 
         longitude: float
-            Longitude between 180 deg W and 180 deg E, e.g. (-180.0 to 180.0).
+            Longitude between 180 deg W and 180 deg E, e.g. [-180.0 to 180.0).
 
         force_zone number: int
             Zone Number is represented with global map numbers of an UTM Zone
@@ -196,7 +197,7 @@ cpdef from_latlon(double latitude, double longitude, force_zone_number=None, str
     if strict:
         if not -80.0 <= latitude <= 84.0:
             raise OutOfRangeError('latitude out of range (must be between 80 deg S and 84 deg N)')
-        if not -180.0 <= longitude <= 180.0:
+        if not -180.0 <= longitude < 180.0:
             raise OutOfRangeError('longitude out of range (must be between 180 deg W and 180 deg E)')
 
     if force_zone_number is None:
