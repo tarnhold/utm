@@ -3,7 +3,7 @@ from Cython.Build import cythonize
 
 setup(
     name='utm',
-    version='0.4.1',
+    version='0.4.2',
     author='Tobias Bieniek',
     author_email='Tobias.Bieniek@gmx.de',
     url='https://github.com/Turbo87/utm',
