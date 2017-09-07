@@ -16,7 +16,7 @@ based on geodetic literature.
 Modifications
 
 * Expanded power series from meter to sub-millimeter precise projection
-* Projection onto GRS80 ellipsoid
+* Projection onto GRS80 ellipsoid, as this is the basis for ETRS89 coordinates
 * Cythonization for performance
 * Extended testing, invoked by setup.py test
 * Some minor bugfixes
