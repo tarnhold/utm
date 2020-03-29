@@ -59,6 +59,12 @@ cdef double P6 = (8011. / 2560 * _E5)
 
 ZONE_LETTERS = "CDEFGHJKLMNPQRSTUVWXX"
 
+
+cpdef mod_angle(double value):
+    """Returns angle in radians to be between -pi and pi"""
+    return (value + M_PI) % (2 * M_PI) - M_PI
+
+
 cpdef to_latlon(double easting, double northing, int zone_number, zone_letter=None, northern=None, strict=True):
     """This function convert an UTM coordinate into Latitude and Longitude
 
@@ -169,8 +175,10 @@ cpdef to_latlon(double easting, double northing, int zone_number, zone_letter=No
                  d ** 5 / 120 * (5 + 28 * p_tan2 + 24 * p_tan4 + 6 * c - 3 * c2 - 4 * c3 + 8 * p_tan2 * c + 4 * p_tan2 * c2 + 24 * p_tan2 * c3) -
                  d ** 7 / 5040 * (61 + 662 * p_tan2 + 1320 * p_tan4 + 720 * p_tan6)) / p_cos
 
+    longitude = mod_angle(longitude + deg2rad * zone_number_to_central_longitude(zone_number))
+
     return (rad2deg * latitude,
-            rad2deg * longitude + zone_number_to_central_longitude(zone_number))
+            rad2deg * longitude)
 
 
 cpdef from_latlon(double latitude, double longitude, force_zone_number=None, strict=True):
@@ -230,7 +238,7 @@ cpdef from_latlon(double latitude, double longitude, force_zone_number=None, str
     cdef double c3 = c ** 3
     cdef double c4 = c ** 4
 
-    cdef double a = cos(lat_rad) * (lon_rad - central_lon_rad)
+    cdef double a = cos(lat_rad) * mod_angle(lon_rad - central_lon_rad)
 
     # meridian distance from latitude
     cdef double m = R * (M1 * lat_rad -

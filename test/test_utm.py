@@ -333,6 +333,23 @@ class TestProject(unittest.TestCase):
         self.assertTrue(isinstance(UTM.__version__, str) and '.' in UTM.__version__)
 
 
+
+class TestForcingAntiMeridian(unittest.TestCase):
+    def assert_equal_lon(self, result, expected_lon):
+        _, lon = UTM.to_latlon(*result[:4], strict=False)
+        self.assertAlmostEqual(lon, expected_lon, 4)
+
+    def test_force_east(self):
+        # Force point just west of anti-meridian to east zone 1
+        self.assert_equal_lon(
+            UTM.from_latlon(0, 179.9, 1, 'N'), 179.9)
+
+    def test_force_west(self):
+        # Force point just east of anti-meridian to west zone 60
+        self.assert_equal_lon(
+            UTM.from_latlon(0, -179.9, 60, 'N'), -179.9)
+
+
 if __name__ == '__main__':
     unittest.main()
 
