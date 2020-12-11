@@ -1,9 +1,12 @@
 from setuptools import setup, find_packages
 from Cython.Build import cythonize
 
+from utm._version import __version__
+
+
 setup(
     name='utm',
-    version='0.4.2',
+    version=__version__,
     author='Tobias Bieniek',
     author_email='Tobias.Bieniek@gmx.de',
     url='https://github.com/Turbo87/utm',

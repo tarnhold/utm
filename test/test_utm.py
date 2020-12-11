@@ -328,6 +328,11 @@ class SpecialZones(unittest.TestCase):
         self.assert_zone_equal(UTM.from_latlon(64, 12), 33, 'W')
 
 
+class TestProject(unittest.TestCase):
+    def test_version(self):
+        self.assertTrue(isinstance(UTM.__version__, str) and '.' in UTM.__version__)
+
+
 if __name__ == '__main__':
     unittest.main()
 
