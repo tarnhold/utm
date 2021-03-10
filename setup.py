@@ -23,7 +23,7 @@ setup(
         'Topic :: Scientific/Engineering :: GIS',
     ],
     packages=['utm'],
-    ext_modules=cythonize('utm/conversion.pyx'),
+    ext_modules=cythonize('utm/conversion.pyx', compiler_directives={'language_level': 3}),
     scripts=['scripts/utm-converter'],
     test_suite='test',
 )
