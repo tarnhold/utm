@@ -144,7 +144,7 @@ cpdef to_latlon(double easting, double northing, int zone_number, zone_letter=No
     cdef double n = R / sqrt(1 - E * p_sin2)
     cdef double r = (1 - E) / (1 - E * p_sin2)
 
-    cdef double c = _E * p_cos ** 2
+    cdef double c = E_P2 * p_cos ** 2
     cdef double c2 = c ** 2
     cdef double c3 = c ** 3
     cdef double c4 = c ** 4

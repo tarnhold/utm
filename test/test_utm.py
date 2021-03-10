@@ -92,18 +92,15 @@ class KnownValuesGRS80(UTMTestCase):
             # we should get the same values as the initial input
             self.assert_latlon_equal(latlon, result, 5)
 
-    # series expansion for inverse (utm->llh) is worse than forward (llh->utm)
-    # calculation so we cannot expect same accuracy
     def test_to_latlon_roundtrip(self):
         '''to_latlon look how good roundtrip fits'''
         for latlon, utm, utm_kw in self.known_values:
             latlonr = UTM.to_latlon(*utm)
-
             # disable strict lat/lon range check, because roundtrip
-            # of "Latitude 84" is 84.00000016... which is outside range
+            # of "Latitude 84" is 84.00000000000011... which is outside range
             result = UTM.from_latlon(*latlonr, strict=False)
             # we should get the same values as the initial input
-            self.assert_latlon_equal(utm, result, 0)
+            self.assert_latlon_equal(utm, result, 5)
 
 
 class BadInput(UTMTestCase):
