@@ -61,7 +61,7 @@ ZONE_LETTERS = "CDEFGHJKLMNPQRSTUVWXX"
 
 
 cpdef mod_angle(double value):
-    """Returns angle in radians to be between -pi and pi"""
+    """Returns angle in radians in range [-pi, pi)"""
     return (value + M_PI) % (2 * M_PI) - M_PI
 
 

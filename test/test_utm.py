@@ -1,4 +1,5 @@
 import utm as UTM
+import math
 import unittest
 
 
@@ -348,6 +349,21 @@ class TestForcingAntiMeridian(unittest.TestCase):
         # Force point just east of anti-meridian to west zone 60
         self.assert_equal_lon(
             UTM.from_latlon(0, -179.9, 60, 'N'), -179.9)
+
+
+class TestModAngle(unittest.TestCase):
+    def test_modangle(self):
+        # range: [-pi, pi)
+        # lower bound
+        self.assertAlmostEqual(UTM.mod_angle(-math.pi), -math.pi, 6)
+        self.assertAlmostEqual(UTM.mod_angle(-math.pi + 0.1), -math.pi + 0.1, 6)
+        self.assertAlmostEqual(UTM.mod_angle(-math.pi / 2.0), -math.pi / 2.0, 6)
+        # upper bound
+        self.assertAlmostEqual(UTM.mod_angle(math.pi / 2.0), math.pi / 2.0, 6)
+        self.assertAlmostEqual(UTM.mod_angle(math.pi - 0.1), math.pi - 0.1, 6)
+        self.assertAlmostEqual(UTM.mod_angle(math.pi - 0.00001), math.pi - 0.00001, 6)
+        self.assertAlmostEqual(UTM.mod_angle(math.pi), -math.pi, 6)
+
 
 
 if __name__ == '__main__':
