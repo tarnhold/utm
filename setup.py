@@ -1,12 +1,9 @@
 from setuptools import setup, find_packages
 from Cython.Build import cythonize
 
-from utm._version import __version__
-
-
 setup(
     name='utm',
-    version=__version__,
+    use_scm_version={"write_to": "utm/_version.py"},
     author='Thomas Arnhold',
     author_email='thomas@arnhold.org',
     url='https://github.com/tarnhold/utm',
@@ -24,6 +21,10 @@ setup(
     ],
     packages=['utm'],
     ext_modules=cythonize('utm/conversion.pyx', compiler_directives={'language_level': 3}),
+    setup_requires=[
+       'cython',
+       'setuptools_scm',
+    ],
     scripts=['scripts/utm-converter'],
     test_suite='test',
 )
