@@ -1,0 +1,12 @@
+[build-system]
+requires = [
+    "setuptools >= 61.0",
+    "setuptools_scm",
+    "wheel",
+    "cython"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
